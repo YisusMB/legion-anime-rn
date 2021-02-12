@@ -23,7 +23,6 @@ const CustomTextDefaultProps: TextProps = {
 
 export default function CustomText(props: TextProps) {
     const mergedProps = { ...CustomTextDefaultProps, ...props, style: { ...CustomTextDefaultProps.style, ...props.style } }
-    console.log(mergedProps)
     return <Text {...mergedProps} >{props.children}</Text>
 }
 

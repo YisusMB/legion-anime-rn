@@ -2,24 +2,13 @@ import React, { useRef } from "react";
 import {View, Dimensions, StyleSheet, Image, Animated, TouchableOpacity} from "react-native";
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { Anime } from "../utils/types";
-import { Text } from './index'
-
-const defaultAnimeCardProps: Anime = {
-    id: 0,
-    isFavorite: false,
-    viewCount: 0,
-    title: '',
-    image: '',
-    lastSeenEpisode: 0,
-    description: '',
-}
-
+// import { Text } from './index'
+import Text from './Text'
 const windowWidth = Dimensions.get('window').width
 
 export default function AnimeCard(props: Anime) {
     const favoriteAnimation = useRef(new Animated.Value(1)).current;
     const favoriteAnimationFill = useRef(new Animated.Value(0)).current;
-
 
     const toggleFavoriteIcon = () => {
         Animated.timing(favoriteAnimation, { toValue: (favoriteAnimation as any)._value !== 1 ? 1 : 0, duration: 300, useNativeDriver: false }).start();
@@ -33,7 +22,6 @@ export default function AnimeCard(props: Anime) {
         toggleFavoriteIconFill()
     }
 
-    console.log(props,windowWidth, 'props anime card')
     return (
         <View style={AnimeCardStyles.container}>
             <View style={AnimeCardStyles.imageContainer}>
@@ -152,4 +140,12 @@ const AnimeCardStyles = StyleSheet.create({
     },
 })
 
-AnimeCard.defaultProps = defaultAnimeCardProps
+AnimeCard.defaultProps = {
+    id: 0,
+    isFavorite: false,
+    viewCount: 0,
+    title: '',
+    image: '',
+    lastSeenEpisode: 0,
+    description: '',
+}
