@@ -1,61 +1,98 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { Stack } from './src/utils/navigationTypes';
+import AnimeDetailsScreen from './src/screens/animeDetailsScreen';
+import HomeScreen from './src/screens/homeScreen';
+import {
+    useFonts,
+    PTSans_400Regular,
+    PTSans_400Regular_Italic,
+    PTSans_700Bold,
+    PTSans_700Bold_Italic,
+} from '@expo-google-fonts/pt-sans';
+import {ActivityIndicator, Button, TouchableOpacity} from "react-native";
+import { StatusBar } from 'expo-status-bar';
+import {MaterialIcons} from "@expo/vector-icons";
 
-// Here goes all screen props for stack navigator
-type RootStackParamList = {
-    Home: undefined;
-    Details: { animeId: number, image: string | number, lastSeenEpisode: number | null };
+const colors = {
+    primary: 'rgb(28,23,23)',
+    secondary: 'rgb(55,46,46)',
+    white: 'rgb(252, 251, 251)'
+}
+
+const MyTheme = {
+    dark: true,
+    colors: {
+        primary: colors.white,
+        background: colors.primary,
+        card: colors.primary,
+        text: 'rgb(252, 251, 251)',
+        border: 'rgb(199, 199, 204)',
+        notification: 'rgb(255, 69, 58)',
+    },
 };
 
-type HomeScreenNavigationProp =  StackNavigationProp<RootStackParamList, 'Home'>;
-type DetailsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Details'>
-type DetailsScreenRouteProp = RouteProp<RootStackParamList, 'Details'>;
-
-
-type HomeProps = {
-    navigation: HomeScreenNavigationProp;
-};
-
-type DetailsProps = {
-    navigation: DetailsScreenNavigationProp;
-    route: DetailsScreenRouteProp;
+const AnimeDetailsScreeOptions = {
+    // headerTitle: (props: DetailsScreenNavigationProp) => <LogoTitle {...props} />,
+    // headerRight: () => (
+    //     <Button
+    //         onPress={() => alert('This is a button!')}
+    //         title="Info"
+    //         color="#fff"
+    //     />
+    // ),
+    // headerLeft: () => (
+    //     <Button
+    //         onPress={() => alert('This is a button!')}
+    //         title="Info"
+    //         color="#fff"
+    //     />
+    // ),
+    headerBackTitleVisible: false,
+    headerTitle: 'Hi!',
 }
-
-function HomeScreen({ navigation }: HomeProps) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen</Text>
-            <Button
-                title="Go to Details"
-                onPress={() => navigation.navigate('Details', { animeId: 1, image: 'hi', lastSeenEpisode: null })}
-            />
-        </View>
-    );
-}
-
-function DetailsScreen({ navigation, route }: DetailsProps) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Details Screen</Text>
-            <Text>{JSON.stringify(route.params)}</Text>
-        </View>
-    );
-}
-
-const Stack = createStackNavigator();
 
 function App() {
-  return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Details" component={DetailsScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-  );
+
+    let [fontsLoaded] = useFonts({
+        PTSans_400Regular,
+        PTSans_400Regular_Italic,
+        PTSans_700Bold,
+        PTSans_700Bold_Italic,
+    })
+    if (!fontsLoaded) {
+        return <ActivityIndicator/>;
+    } else {
+        return (
+            <NavigationContainer theme={MyTheme}>
+                <StatusBar translucent={false} style="light" />
+                <Stack.Navigator>
+                    <Stack.Screen options={{ headerTitle: "Recientes", headerTitleAlign: 'left',
+                        headerLeft: () => (
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={{ marginLeft: 5 }}
+                                onPress={() => alert('This is a button!')}
+                            >
+                                <MaterialIcons name="menu" style={{ color: 'white', fontSize: 30 }} />
+                            </TouchableOpacity>
+                        ),
+                        headerRight: () => (
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                style={{ marginRight: 5 }}
+                                onPress={() => alert('This is a button!')}
+                            >
+                                <MaterialIcons name="notifications" style={{ color: 'white', fontSize: 30 }} />
+                            </TouchableOpacity>
+                        ),
+                    }} name="Home" component={HomeScreen}/>
+                    <Stack.Screen name="AnimeDetails" options={AnimeDetailsScreeOptions}
+                                  component={AnimeDetailsScreen}/>
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
+    }
 }
 
-export default App;
+export default App
