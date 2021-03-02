@@ -1,5 +1,5 @@
 export type Anime = {
-    id: number,
+    id: string,
     title: string,
     isFavorite: boolean,
     viewCount: number,

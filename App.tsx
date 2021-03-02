@@ -13,6 +13,7 @@ import {
 import {ActivityIndicator, Button, TouchableOpacity} from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import {MaterialIcons} from "@expo/vector-icons";
+import AnimeStack from './src/components/AnimeStack';
 
 const colors = {
     primary: 'rgb(28,23,23)',
@@ -64,33 +65,36 @@ function App() {
         return <ActivityIndicator/>;
     } else {
         return (
-            <NavigationContainer theme={MyTheme}>
+            // <NavigationContainer theme={MyTheme}>
+            <>
                 <StatusBar translucent={false} style="light" />
-                <Stack.Navigator>
-                    <Stack.Screen options={{ headerTitle: "Recientes", headerTitleAlign: 'left',
-                        headerLeft: () => (
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={{ marginLeft: 5 }}
-                                onPress={() => alert('This is a button!')}
-                            >
-                                <MaterialIcons name="menu" style={{ color: 'white', fontSize: 30 }} />
-                            </TouchableOpacity>
-                        ),
-                        headerRight: () => (
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={{ marginRight: 5 }}
-                                onPress={() => alert('This is a button!')}
-                            >
-                                <MaterialIcons name="notifications" style={{ color: 'white', fontSize: 30 }} />
-                            </TouchableOpacity>
-                        ),
-                    }} name="Home" component={HomeScreen}/>
-                    <Stack.Screen name="AnimeDetails" options={AnimeDetailsScreeOptions}
-                                  component={AnimeDetailsScreen}/>
-                </Stack.Navigator>
-            </NavigationContainer>
+                <AnimeStack />
+            </>
+            //     // <Stack.Navigator>
+            //         <Stack.Screen options={{ headerTitle: "Recientes", headerTitleAlign: 'left',
+            //             headerLeft: () => (
+            //                 <TouchableOpacity
+            //                     activeOpacity={1}
+            //                     style={{ marginLeft: 5 }}
+            //                     onPress={() => alert('This is a button!')}
+            //                 >
+            //                     <MaterialIcons name="menu" style={{ color: 'white', fontSize: 30 }} />
+            //                 </TouchableOpacity>
+            //             ),
+            //             headerRight: () => (
+            //                 <TouchableOpacity
+            //                     activeOpacity={1}
+            //                     style={{ marginRight: 5 }}
+            //                     onPress={() => alert('This is a button!')}
+            //                 >
+            //                     <MaterialIcons name="notifications" style={{ color: 'white', fontSize: 30 }} />
+            //                 </TouchableOpacity>
+            //             ),
+            //         }} name="Home" component={AnimeStack}/>
+            //         {/*<Stack.Screen name="AnimeDetails" options={AnimeDetailsScreeOptions}*/}
+            //         {/*              component={AnimeDetailsScreen}/>*/}
+            //     {/*</Stack.Navigator>*/}
+            // {/*// </NavigationContainer>*/}
         );
     }
 }

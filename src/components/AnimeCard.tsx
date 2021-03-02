@@ -4,9 +4,10 @@ import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { Anime } from "../utils/types";
 // import { Text } from './index'
 import Text from './Text'
+import { SharedElement } from "react-navigation-shared-element";
 const windowWidth = Dimensions.get('window').width
 
-export default function AnimeCard(props: Anime) {
+export default function AnimeCard(props: any) {
     const favoriteAnimation = useRef(new Animated.Value(1)).current;
     const favoriteAnimationFill = useRef(new Animated.Value(0)).current;
 
@@ -25,11 +26,13 @@ export default function AnimeCard(props: Anime) {
     return (
         <View style={AnimeCardStyles.container}>
             <View style={AnimeCardStyles.imageContainer}>
-                <Image
-                    resizeMode={'cover'}
-                    borderRadius={AnimeCardStyles.imageContainer.borderRadius}
-                    source={{ uri: props.image }}
-                    style={AnimeCardStyles.image} />
+                <SharedElement style={{ flex: 1 }} id={props.id}>
+                    <Image
+                        resizeMode={'cover'}
+                        borderRadius={AnimeCardStyles.imageContainer.borderRadius}
+                        source={{ uri: props.image }}
+                        style={AnimeCardStyles.image} />
+                </SharedElement>
                 <View style={AnimeCardStyles.animeInfoContainer}>
                     <View style={AnimeCardStyles.iconsContainer}>
                         <TouchableOpacity onPress={toggleFavorite}>
@@ -54,21 +57,21 @@ export default function AnimeCard(props: Anime) {
             <View style={AnimeCardStyles.buttonsContainer}>
                 <TouchableOpacity
                     activeOpacity={1}
-                    onPress={() => {}}
+                    onPress={() => props.navigation.navigate('AnimeDetailsScreen', { item: props })}
                     style={AnimeCardStyles.iconActionButton}
                 >
                     <FontAwesome5 name="eye-slash" style={AnimeCardStyles.iconAction} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={1}
-                    onPress={() => {}}
+                    onPress={() => props.navigation.navigate('AnimeDetailsScreen', { item: props })}
                     style={AnimeCardStyles.iconActionButton}
                 >
                     <FontAwesome5 name="play" style={AnimeCardStyles.iconAction} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={1}
-                    onPress={() => {}}
+                    onPress={() => props.navigation.navigate('AnimeDetailsScreen', { item: props })}
                     style={AnimeCardStyles.iconActionButton}
                 >
                     <FontAwesome5 name="list" style={AnimeCardStyles.iconAction} />
